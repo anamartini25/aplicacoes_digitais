@@ -1,0 +1,11 @@
+def palindromo(texto):
+    texto_limpo = texto.lower()
+    texto_limpo = "".join(caractere for caractere in texto_limpo if caractere.isalnum())
+    return texto_limpo == texto_limpo[::-1]
+
+entrada = input("Digite uma palavra ou frase: ")
+
+if palindromo(entrada):
+    print(f"{entrada} é um palíndromo")
+else:
+    print(f"{entrada} não é um palíndromo")
