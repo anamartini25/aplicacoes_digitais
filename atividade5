@@ -1,0 +1,23 @@
+caminho_arquivo = input("Digite o caminho do arquivo .txt: ")
+
+try:
+    with open(caminho_arquivo, "r", encoding="utf-8") as arquivo:
+        conteudo = arquivo.read()
+
+        linhas = conteudo.split()
+        qtd_linhas = len(linhas)
+
+        palavras = conteudo.split()
+        qtd_palavras = len(palavras)
+
+        qtd_caracteres = len(conteudo)
+
+    print(f"Total de linhas: {qtd_linhas}.")
+    print(f"Total de palavras: {qtd_palavras}.")
+    print(f"Total de caracteres: {qtd_caracteres}.")
+
+except FileNotFoundError:
+    print("Erro: Arquivo não encontrado! Verifique se o caminho está correto.")
+
+except Exception as e:
+    print(f"Ocorreu um erro ao ler o arquivo: {e}.")
