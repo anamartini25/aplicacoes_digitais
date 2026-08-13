@@ -1,0 +1,12 @@
+texto = input("Digite um texto: ")
+texto_limpo = texto.lower()
+for pontuacao in [".", ",", "!", "?", ";", ":"]: 
+    texto_limpo = texto_limpo.replace(pontuacao, "")
+
+palavras = texto_limpo.split()
+
+cont_palavras = {}
+for palavra in palavras:
+    cont_palavras[palavra] = cont_palavras.get(palavra, 0) + 1
+
+print(f"A quantidade de palavras nesse texto é: {cont_palavras}")
