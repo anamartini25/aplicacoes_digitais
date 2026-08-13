@@ -1,0 +1,25 @@
+def num_primo(n):
+    if n <=1:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def primos_entre(a, b):
+    inicio = min(a, b)
+    fim = max(a, b)
+
+    lista_primos = []
+
+    for num in range(inicio, fim + 1):
+        if num_primo(num):
+            lista_primos.append(num)
+
+    return lista_primos
+
+num1 = int(input("Digite um numero inteiro: "))
+num2 = int(input("Digite outro numero inteiro: "))
+
+resultado = primos_entre(num1, num2)
+print(f"Os números primos entre {num1} e {num2} são: {resultado}.")
