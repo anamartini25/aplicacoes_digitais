@@ -1,0 +1,17 @@
+def ordenar_pessoas(lista):
+    return sorted(lista, key=lambda pessoa: (-pessoa[2], pessoa[1], pessoa[0]))
+
+
+pessoas = [
+    ("Carlos", 30, 5000.0),
+    ("Ana", 25, 7500.0),
+    ("Bruno", 28, 5000.0),  # Empate no salário com Carlos (idade menor vem antes)
+    ("Daniela", 30, 5000.0),  # Empate no salário e idade com Carlos (ordem alfabética)
+    ("Eduardo", 40, 7500.0),  # Empate no salário com Ana (idade maior vem depois)
+]
+
+pessoas_ordenadas = ordenar_pessoas(pessoas)
+
+print("=== LISTA ORDENADA ===")
+for nome, idade, salario in pessoas_ordenadas:
+    print(f"Nome: {nome:<10} | Idade: {idade} | Salário: R$ {salario:.2f}")
