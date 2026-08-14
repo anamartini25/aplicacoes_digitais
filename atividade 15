@@ -1,0 +1,15 @@
+def elemento_majoritario(nums):
+    candidato = None
+    contador = 0
+
+    for num in nums:
+        if contador == 0:
+            candidato = num
+        contador += 1 if num == candidato else -1
+
+    return candidato
+
+
+numeros = [2, 2, 1, 1, 1, 2, 2]
+resultado = elemento_majoritario(numeros)
+print(f"O elemento majoritário é: {resultado}")
