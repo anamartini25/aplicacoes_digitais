@@ -1,12 +1,10 @@
 import json
 import os
 
-# Nome do arquivo local onde os dados serão salvos
 ARQUIVO_CONTATOS = "contatos.json"
 
 
 def carregar_contatos():
-    """Lê os contatos do arquivo JSON. Se não existir, retorna um dicionário vazio."""
     if os.path.exists(ARQUIVO_CONTATOS):
         try:
             with open(ARQUIVO_CONTATOS, "r", encoding="utf-8") as arquivo:
@@ -18,7 +16,6 @@ def carregar_contatos():
 
 
 def salvar_contatos(agenda):
-    """Salva o dicionário de contatos no arquivo JSON."""
     with open(ARQUIVO_CONTATOS, "w", encoding="utf-8") as arquivo:
         json.dump(agenda, arquivo, ensure_ascii=False, indent=4)
 
@@ -65,7 +62,6 @@ def remover_contato(agenda):
 
 
 def menu():
-    # Carrega os dados existentes assim que o programa inicia
     agenda = carregar_contatos()
 
     while True:
@@ -93,6 +89,5 @@ def menu():
             print("Opção inválida! Tente novamente.")
 
 
-# Executa o programa
 if __name__ == "__main__":
     menu()
