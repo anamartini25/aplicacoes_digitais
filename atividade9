@@ -1,0 +1,72 @@
+# Dicionário para armazenar os contatos
+# Estrutura: { "Nome": "Telefone" }
+agenda = {}
+
+
+def adicionar_contato():
+    nome = input("Digite o nome do contato: ").strip()
+    if nome in agenda:
+        print(f"O contato '{nome}' já existe!")
+    else:
+        telefone = input("Digite o telefone: ").strip()
+        agenda[nome] = telefone
+        print(f"Contato '{nome}' adicionado com sucesso!")
+
+
+def listar_contatos():
+    if not agenda:
+        print("A agenda está vazia.")
+    else:
+        print("\n--- Lista de Contatos ---")
+        for nome, telefone in agenda.items():
+            print(f"Nome: {nome} | Telefone: {telefone}")
+
+
+def atualizar_contato():
+    nome = input("Digite o nome do contato que deseja atualizar: ").strip()
+    if nome in agenda:
+        novo_telefone = input("Digite o novo telefone: ").strip()
+        agenda[nome] = novo_telefone
+        print(f"Telefone de '{nome}' atualizado com sucesso!")
+    else:
+        print(f"Contato '{nome}' não encontrado.")
+
+
+def remover_contato():
+    nome = input("Digite o nome do contato que deseja remover: ").strip()
+    if nome in agenda:
+        del agenda[nome]
+        print(f"Contato '{nome}' removido com sucesso!")
+    else:
+        print(f"Contato '{nome}' não encontrado.")
+
+
+def menu():
+    while True:
+        print("\n=== AGENDA DE CONTATOS ===")
+        print("1. Adicionar Contato (Create)")
+        print("2. Listar Contatos (Read)")
+        print("3. Atualizar Contato (Update)")
+        print("4. Remover Contato (Delete)")
+        print("5. Sair")
+
+        opcao = input("Escolha uma opção (1-5): ").strip()
+
+        if opcao == "1":
+            adicionar_contato()
+        elif opcao == "2":
+            listar_contatos()
+        elif opcao == "3":
+            atualizar_contato()
+        elif opcao == "4":
+            remover_contato()
+        elif opcao == "5":
+            print("Saindo do sistema... Até logo!")
+            break
+        else:
+            print("Opção inválida! Tente novamente.")
+
+
+# Executa o programa
+if __name__ == "__main__":
+    menu()
