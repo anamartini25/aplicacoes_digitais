@@ -1,0 +1,98 @@
+import json
+import os
+
+# Nome do arquivo local onde os dados serão salvos
+ARQUIVO_CONTATOS = "contatos.json"
+
+
+def carregar_contatos():
+    """Lê os contatos do arquivo JSON. Se não existir, retorna um dicionário vazio."""
+    if os.path.exists(ARQUIVO_CONTATOS):
+        try:
+            with open(ARQUIVO_CONTATOS, "r", encoding="utf-8") as arquivo:
+                return json.load(arquivo)
+        except json.JSONDecodeError:
+            print("Aviso: Arquivo de contatos corrompido. Iniciando agenda vazia.")
+            return {}
+    return {}
+
+
+def salvar_contatos(agenda):
+    """Salva o dicionário de contatos no arquivo JSON."""
+    with open(ARQUIVO_CONTATOS, "w", encoding="utf-8") as arquivo:
+        json.dump(agenda, arquivo, ensure_ascii=False, indent=4)
+
+
+def adicionar_contato(agenda):
+    nome = input("Digite o nome do contato: ").strip()
+    if nome in agenda:
+        print(f"O contato '{nome}' já existe!")
+    else:
+        telefone = input("Digite o telefone: ").strip()
+        agenda[nome] = telefone
+        salvar_contatos(agenda)
+        print(f"Contato '{nome}' adicionado e salvo com sucesso!")
+
+
+def listar_contatos(agenda):
+    if not agenda:
+        print("A agenda está vazia.")
+    else:
+        print("\n--- Lista de Contatos ---")
+        for nome, telefone in agenda.items():
+            print(f"Nome: {nome} | Telefone: {telefone}")
+
+
+def atualizar_contato(agenda):
+    nome = input("Digite o nome do contato que deseja atualizar: ").strip()
+    if nome in agenda:
+        novo_telefone = input("Digite o novo telefone: ").strip()
+        agenda[nome] = novo_telefone
+        salvar_contatos(agenda)
+        print(f"Telefone de '{nome}' atualizado e salvo com sucesso!")
+    else:
+        print(f"Contato '{nome}' não encontrado.")
+
+
+def remover_contato(agenda):
+    nome = input("Digite o nome do contato que deseja remover: ").strip()
+    if nome in agenda:
+        del agenda[nome]
+        salvar_contatos(agenda)
+        print(f"Contato '{nome}' removido com sucesso!")
+    else:
+        print(f"Contato '{nome}' não encontrado.")
+
+
+def menu():
+    # Carrega os dados existentes assim que o programa inicia
+    agenda = carregar_contatos()
+
+    while True:
+        print("\n=== AGENDA DE CONTATOS (COM PERSISTÊNCIA) ===")
+        print("1. Adicionar Contato (Create)")
+        print("2. Listar Contatos (Read)")
+        print("3. Atualizar Contato (Update)")
+        print("4. Remover Contato (Delete)")
+        print("5. Sair")
+
+        opcao = input("Escolha uma opção (1-5): ").strip()
+
+        if opcao == "1":
+            adicionar_contato(agenda)
+        elif opcao == "2":
+            listar_contatos(agenda)
+        elif opcao == "3":
+            atualizar_contato(agenda)
+        elif opcao == "4":
+            remover_contato(agenda)
+        elif opcao == "5":
+            print("Saindo do sistema... Até logo!")
+            break
+        else:
+            print("Opção inválida! Tente novamente.")
+
+
+# Executa o programa
+if __name__ == "__main__":
+    menu()
