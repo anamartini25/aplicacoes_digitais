@@ -1,0 +1,24 @@
+import random
+
+def sortear_nome(): 
+    nomes = []
+
+    print("Digite os nomes para o sorteio (digite 'fim' para encerrar): ")
+
+    while True:
+        entrada = input("Nome: ").strip()
+
+        if entrada.lower() == "fim":
+            break
+
+        if entrada:
+            nomes.append(entrada)
+
+    if nomes:
+        escolhido = random.choice(nomes)
+        print(f"Lista de participantes: {nomes}")
+        print(f"\nO nome sorteado foi: {escolhido}!")
+
+    else: print("Nenhum nome foi inserido.")
+
+sortear_nome()
