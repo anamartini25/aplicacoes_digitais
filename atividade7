@@ -1,0 +1,20 @@
+def fibonacci(n):
+    if n <=0:
+        return []
+
+    if n == 1:
+        return [0]
+
+    sequencia = [0, 1]
+
+    for _ in range (2, n):
+        proximo = sequencia[-1] + sequencia[-2]
+        sequencia.append(proximo)
+
+    return sequencia
+
+num = int(input("Digite um número: "))
+resultado = fibonacci(num)
+
+print(f"Os {num} primeiros termos de Fibonacci são: ")
+print(resultado)
