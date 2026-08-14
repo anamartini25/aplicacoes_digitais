@@ -1,0 +1,37 @@
+def encontrar_subconjuntos(numeros, alvo):
+    subconjuntos_encontrados = []
+
+    numeros.sort()
+
+    def backtrack(inicio, subconjunto_atual, soma_atual):
+        if soma_atual == alvo:
+            subconjuntos_encontrados.append(list(subconjunto_atual))
+            return
+
+        if soma_atual > alvo:
+            return
+
+        for i in range(inicio, len(numeros)):
+            if i > inicio and numeros[i] == numeros[i - 1]:
+                continue
+
+            subconjunto_atual.append(numeros[i])
+
+            backtrack(i + 1, subconjunto_atual, soma_atual + numeros[i])
+
+            subconjunto_atual.pop()
+
+    backtrack(0, [], 0)
+    return subconjuntos_encontrados
+
+
+conjunto = [10, 1, 2, 7, 6, 1, 5]
+alvo = 8
+
+resultados = encontrar_subconjuntos(conjunto, alvo)
+
+print(f"Conjunto original: {conjunto}")
+print(f"Valor alvo: {alvo}")
+print("\nSubconjuntos encontrados:")
+for sub in resultados:
+    print(sub)
