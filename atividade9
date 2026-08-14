@@ -1,5 +1,3 @@
-# Dicionário para armazenar os contatos
-# Estrutura: { "Nome": "Telefone" }
 agenda = {}
 
 
@@ -66,7 +64,5 @@ def menu():
         else:
             print("Opção inválida! Tente novamente.")
 
-
-# Executa o programa
 if __name__ == "__main__":
     menu()
