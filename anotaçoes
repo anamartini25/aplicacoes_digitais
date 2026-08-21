@@ -1,0 +1,12 @@
+para instalar coisa em python = pip install
+
+dentro da pasta teste:
+ tem que criar arquivo com "test_..." 
+tem que ter o arquivo "__init__"
+sempre tem que ser "def test_..."
+
+from "arquivo" import * (*= tudo)
+
+assert = usa para comparar dois resultados
+
+se não funcionar "pytest" use "python -m pytest"
