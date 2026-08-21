@@ -1,0 +1,9 @@
+from calculadora import *
+import pytest
+
+def test_soma():
+    assert soma (2, 3) == 5
+
+def test_divisao_por_zero():
+    with pytest.raises(ZeroDivisionError):
+        divisao (2, 0) == 0
