@@ -10,3 +10,6 @@ from "arquivo" import * (*= tudo)
 assert = usa para comparar dois resultados
 
 se não funcionar "pytest" use "python -m pytest"
+
+no python, quando uma variavel ja tem valor, ela é opcional 
+
