@@ -1,0 +1,24 @@
+
+def calcular_frete(peso, distancia, tipo="normal"):
+    if peso <= 0:
+        raise ValueError('O peso não pode ser menor que zero.')
+
+    elif distancia <= 0:
+        raise ValueError('A distância não pode ser menor que zero.')
+
+    elif tipo != 'expresso' and tipo != 'normal':
+            raise ValueError('O tipo não pode ser diferente de normal ou expresso.')
+
+    elif tipo == 'expresso':
+            frete_expresso = 10 + (peso * 2) + (distancia * 0.5)
+            taxa = frete_expresso * 0.5
+            valor_final = frete_expresso + taxa
+            return valor_final  
+
+    else:
+          frete_normal = 10 + (peso * 2) + (distancia * 0.5)
+          return frete_normal
+    
+
+frete_final = calcular_frete(2, 3)
+print(frete_final)
