@@ -1,0 +1,20 @@
+from run import calcular_frete
+import pytest
+
+def test_peso_menor_que_zero():
+    with pytest.raises(ValueError):
+        calcular_frete(0, 0)
+
+def test_distancia_menor_que_zero():
+    with pytest.raises(ValueError):
+            calcular_frete(2, -2)
+
+def test_expresso_ou_normal():
+    with pytest.raises(ValueError):
+         calcular_frete(2, 2, 'navegar')
+
+def test_frete_normal():
+    assert calcular_frete(2, 2, 'normal') == 15.0
+
+def test_frete_expresso():
+    assert calcular_frete(2, 2, 'expresso') == 22.5
