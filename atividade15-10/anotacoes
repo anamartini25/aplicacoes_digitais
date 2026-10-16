@@ -1,0 +1,10 @@
+localhost:8000/docs
+
+firebase
+
+jwt.io
+
+baixar sqlalchemy, requirements (python -m pip install -r requirements)
+extensão sqliite Viewer
+
+ python -m uvicorn main:app --reload
