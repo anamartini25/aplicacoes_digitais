@@ -77,16 +77,16 @@ def perfil(usuario = Depends(verificar_token)):
 
  
 @app.post("/animais", status_code=status.HTTP_201_CREATED)
-def cadastrar_animal(dados: AnimalPayLoad):
+def cadastrar_animal(dados: AnimalPayLoad, usuario = Depends(verificar_token)):
     db = Session()
 
-    animal = Animal(
+    animal = Animais(
         nome=dados.nome,
         especie=dados.especie,
         raca=dados.raca,
         idade=dados.idade,
         nome_tutor=dados.nome_tutor,
-        veterinario_id=dados.veterinario_id
+        veterinario_id=usuario["uid"]
     )
 
     db.add(animal)
@@ -94,20 +94,27 @@ def cadastrar_animal(dados: AnimalPayLoad):
     db.refresh(animal)
     db.close()
 
-    return aluno
+    return animal
 
 @app.get("/animais", status_code=status.HTTP_200_OK)
-def listar_animais():
+def listar_animais(usuario = Depends(verificar_token)):
     db = Session()
-    alunos = db.query(Animal).all()
-    db.close()
 
-    return animais
+    try: 
+        animal = db.query(Animais).all()
+        return animal
+
+    except Exception as e:
+        print("Erro ao listar animais:", e)
+    finally:
+        db.close()
+
+    
 
 @app.get("/animais/{animal_id}", status_code=status.HTTP_200_OK)
-def buscar_animal(animal_id: int):
+def buscar_animal(animal_id: int, usuario = Depends(verificar_token)):
     db = Session()
-    animal = db.query(Animal).filter(Animal.id == animal_id).first()
+    animal = db.query(Animais).filter(Animais.id == animal_id, Animais.veterinario_id == usuario["uid"]).first()
     db.close()
 
     if animal is None:
@@ -118,12 +125,11 @@ def buscar_animal(animal_id: int):
 
     return animal
 
-
-
-@app.delete("/animais/{animal_id}", status_code=status.HTTP_204_NO_CONTENT)
-def excluir_animal(animal_id: int):
+@app.put("/animais/{animal_id}", status_code=status.HTTP_200_OK)
+def atualizar_animal(animal_id: int, dados: AnimalPayLoad, usuario = Depends(verificar_token)):
     db = Session()
-    animal = db.query(Animal).filter(Animal.id == animal_id).first()
+
+    animal = db.query(Animais).filter(Animais.id == animal_id).first()
 
     if animal is None:
         db.close()
@@ -132,6 +138,42 @@ def excluir_animal(animal_id: int):
             detail="Animal não encontrado"
         )
 
-    db.delete(animal)
+    animal.nome = dados.nome
+    animal.especie = dados.especie
+    animal.raca = dados.raca
+    animal.idade = dados.idade
+    animal.nome_tutor = dados.nome_tutor
+    animal.veterinario_id = dados.veterinario_id
+
     db.commit()
+    db.refresh(animal)
     db.close()
+
+    return animal
+
+@app.delete("/animais/{animal_id}", status_code=status.HTTP_204_NO_CONTENT)
+def excluir_animal(animal_id: int, usuario = Depends(verificar_token)):
+    db = Session()
+    animal = db.query(Animais).filter(Animais.id == animal_id, Animais.veterinario_id == usuario["uid"]).first()
+
+    try:
+        animal = db.query(Animais).filter(
+            Animais.id == animal_id,
+            Animais.veterinario_id == usuario["uid"]
+        ).first()
+
+        if animal is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Animal não encontrado ou não pertence a este veterinário"
+            )
+
+        db.delete(animal)
+        db.commit()
+
+    except Exception:
+        db.rollback()
+        raise
+    finally:
+        db.close()
+        
